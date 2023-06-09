@@ -2,7 +2,11 @@ const Product = require("../models/productModel");
 
 const fetchProducts = async (req, res) => {
     try {
-        res.status(200).json({ message: "Success" });
+        const products = await Product.find();
+        if (!products.length) {
+            return res.status(400).json({ message: "Products not found" });
+        }
+        return res.status(200).json({ message: "Success****", products: products });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
